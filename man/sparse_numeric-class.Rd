@@ -5,16 +5,16 @@
 \alias{sparse_numeric-class}
 \title{Sparse numeric vector class}
 \description{
-Stores a numeric vector in sparse format.
-Only non-zero elements are stored.
+This S4 class represents a numeric vector stored in sparse format,
+storing only non-zero values and their positions.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{value}}{numeric vector of non-zero values}
+\item{\code{value}}{Numeric vector of non-zero values.}
 
-\item{\code{pos}}{integer vector of positions corresponding to values}
+\item{\code{pos}}{Integer vector of positions corresponding to `value`.}
 
-\item{\code{length}}{total length of the vector (including zeros)}
+\item{\code{length}}{Integer of total vector length.}
 }}
 

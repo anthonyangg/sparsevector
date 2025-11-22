@@ -1,0 +1,20 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/reference/dot-sanitize_sparse.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/mean-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sort-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sparse_add-sparse_numeric-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sparse_crossprod-sparse_numeric-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sparse_mult-sparse_numeric-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sparse_norm-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sparse_numeric-class.html</loc></url>
+<url><loc>/reference/sparse_sub-sparse_numeric-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/sparse_sum-sparse_numeric-method.html</loc></url>
+<url><loc>/reference/standardize-sparse_numeric-method.html</loc></url>
+</urlset>
+

@@ -6,12 +6,13 @@
 
 #' Sparse numeric vector class
 #'
-#' Stores a numeric vector in sparse format.
-#' Only non-zero elements are stored.
+#' This S4 class represents a numeric vector stored in sparse format,
+#' storing only non-zero values and their positions.
 #'
-#' @slot value numeric vector of non-zero values
-#' @slot pos integer vector of positions corresponding to values
-#' @slot length total length of the vector (including zeros)
+#' @slot value Numeric vector of non-zero values.
+#' @slot pos Integer vector of positions corresponding to `value`.
+#' @slot length Integer of total vector length.
+#'
 #' @export
 setClass(
   Class = "sparse_numeric",
@@ -62,8 +63,17 @@ setValidity("sparse_numeric", function(object) {
 # coercion
 #------------------------
 
-#' @rdname sparse_numeric
+#' Convert sparse_numeric to numeric
+#'
+#' Converts a sparse_numeric object to a full numeric vector.
+#'
+#' @param x sparse_numeric object
+#'
+#' @return numeric vector
 #' @export
+#' @examples
+#' x <- as(c(0,2,0,3), "sparse_numeric")
+#' as(x, "numeric")
 setAs("numeric", "sparse_numeric", function(from) {
   n <- length(from)
   nz_idx <- which(from != 0)
@@ -135,9 +145,19 @@ setGeneric("sparse_sum", function(x, ...) standardGeneric("sparse_sum"))
 # methods
 #------------------------
 
-# sparse_add
-#' @rdname sparse_add
+#' Add two sparse_numeric objects
+#'
+#' Performs element-wise addition of two sparse_numeric objects.
+#'
+#' @param x sparse_numeric object
+#' @param y sparse_numeric object
+#'
+#' @return sparse_numeric object
 #' @export
+#' @examples
+#' x <- as(c(0,2,0,3), "sparse_numeric")
+#' y <- as(c(1,0,4,0), "sparse_numeric")
+#' sparse_add(x, y)
 setMethod("sparse_add", signature(x="sparse_numeric", y="sparse_numeric"), function(x, y, ...) {
   if (x@length != y@length) stop("vectors must have same length")
   if (length(x@pos)==0L) return(y)
@@ -153,9 +173,20 @@ setMethod("sparse_add", signature(x="sparse_numeric", y="sparse_numeric"), funct
   .sanitize_sparse(res_vals, as.integer(allpos), x@length)
 })
 
-# sparse_sub
-#' @rdname sparse_sub
+
+#' Subtract two sparse_numeric objects
+#'
+#' Performs element-wise subtraction of y from x.
+#'
+#' @param x sparse_numeric object
+#' @param y sparse_numeric object
+#'
+#' @return sparse_numeric object
 #' @export
+#' @examples
+#' x <- as(c(1,2,0,3), "sparse_numeric")
+#' y <- as(c(1,1,0,4), "sparse_numeric")
+#' sparse_sub(x, y)
 setMethod("sparse_sub", signature(x="sparse_numeric", y="sparse_numeric"), function(x, y, ...) {
   if (x@length != y@length) stop("vectors must have same length")
   if (length(x@pos)==0L && length(y@pos)==0L) return(new("sparse_numeric", value=numeric(0), pos=integer(0), length=x@length))
@@ -171,9 +202,23 @@ setMethod("sparse_sub", signature(x="sparse_numeric", y="sparse_numeric"), funct
   .sanitize_sparse(res_vals, as.integer(allpos), x@length)
 })
 
+
+#------------------------
 # sparse_mult
-#' @rdname sparse_mult
+#------------------------
+#' Multiply two sparse_numeric objects
+#'
+#' Performs element-wise multiplication of two sparse_numeric objects.
+#'
+#' @param x sparse_numeric object
+#' @param y sparse_numeric object
+#'
+#' @return sparse_numeric object
 #' @export
+#' @examples
+#' x <- as(c(0,2,0,3), "sparse_numeric")
+#' y <- as(c(1,0,5,2), "sparse_numeric")
+#' sparse_mult(x, y)
 setMethod("sparse_mult", signature(x="sparse_numeric", y="sparse_numeric"), function(x, y, ...) {
   if (x@length != y@length) stop("vectors must have same length")
   if (length(x@pos)==0L || length(y@pos)==0L) return(new("sparse_numeric", value=numeric(0), pos=integer(0), length=x@length))
@@ -185,9 +230,22 @@ setMethod("sparse_mult", signature(x="sparse_numeric", y="sparse_numeric"), func
   .sanitize_sparse(prod_vals, as.integer(common), x@length)
 })
 
+#------------------------
 # sparse_crossprod
-#' @rdname sparse_crossprod
+#------------------------
+#' Cross product of two sparse_numeric objects
+#'
+#' Computes the dot product of two sparse_numeric objects.
+#'
+#' @param x sparse_numeric object
+#' @param y sparse_numeric object
+#'
+#' @return numeric scalar
 #' @export
+#' @examples
+#' x <- as(c(1,2,0,3), "sparse_numeric")
+#' y <- as(c(0,2,5,1), "sparse_numeric")
+#' sparse_crossprod(x, y)
 setMethod("sparse_crossprod", signature(x="sparse_numeric", y="sparse_numeric"), function(x, y, ...) {
   if (x@length != y@length) stop("vectors must have same length")
   if (length(x@pos)==0L || length(y@pos)==0L) return(0)
@@ -197,22 +255,58 @@ setMethod("sparse_crossprod", signature(x="sparse_numeric", y="sparse_numeric"),
   sum(x@value[ix]*y@value[iy])
 })
 
+
+#------------------------
 # sparse_norm
-#' @rdname sparse_norm
+#------------------------
+#' Euclidean norm of sparse_numeric object
+#'
+#' Computes the Euclidean norm of a sparse_numeric object.
+#'
+#' @param x sparse_numeric object
+#'
+#' @return numeric scalar
 #' @export
+#' @examples
+#' x <- as(c(3,0,4), "sparse_numeric")
+#' sparse_norm(x)
 setMethod("sparse_norm", "sparse_numeric", function(x, ...) {
   if (length(x@value)==0L) return(0)
   sqrt(sum(x@value^2))
 })
 
+
+#------------------------
 # sparse_sum
-#' @rdname sparse_sum
+#------------------------
+#' Sum of sparse_numeric object
+#'
+#' Computes the sum of stored values in a sparse_numeric object.
+#'
+#' @param x sparse_numeric object
+#'
+#' @return numeric scalar
 #' @export
+#' @examples
+#' x <- as(c(1,0,2,0,3), "sparse_numeric")
+#' sparse_sum(x)
 setMethod("sparse_sum", "sparse_numeric", function(x, ...) sum(x@value))
 
+
+#------------------------
 # standardize
-#' @rdname standardize
+#------------------------
+#' Standardize a sparse_numeric object
+#'
+#' Standardizes a sparse_numeric object to mean 0 and standard deviation 1.
+#'
+#' @param x sparse_numeric object
+#'
+#' @return sparse_numeric object
 #' @export
+#' @examples
+#' x <- as(c(1,0,1), "sparse_numeric")
+#' standardize(x)
 setMethod("standardize", "sparse_numeric", function(x, ...) {
   x_num <- as(x, "numeric")  # convert to numeric
   m <- mean(x_num)
@@ -220,6 +314,7 @@ setMethod("standardize", "sparse_numeric", function(x, ...) {
   if (s == 0) stop("Cannot standardize: zero standard deviation")
   as((x_num - m)/s, "sparse_numeric")
 })
+
 
 #' Mean for sparse_numeric
 #'
