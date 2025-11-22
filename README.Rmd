@@ -1,0 +1,35 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# sparsevector
+
+![R-CMD-check](https://github.com/anthonyangg/sparsevector/actions/workflows/R-CMD-check.yaml/badge.svg)
+
+`sparsevector` provides a **sparse numeric vector class (`sparse_numeric`)** and methods for efficient computation with mostly-zero vectors. Operations include addition, subtraction, multiplication, crossproduct, sum, norm, and standardization. 
+
+This package is especially useful for handling **high-dimensional vectors** with many zeros while saving memory and computation time.
+
+---
+
+## Installation
+
+You can install the development version directly from GitHub:
+
+```r
+# install devtools if not already installed
+install.packages("devtools")
+
+# install sparsevector from GitHub
+devtools::install_github("anthonyangg/sparsevector")
+```
+

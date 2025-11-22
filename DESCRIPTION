@@ -1,0 +1,18 @@
+Package: sparsevector
+Type: Package
+Title: Sparse Numeric Vectors for Efficient Computation
+Version: 0.1.0
+Authors@R: 
+    person(given = "Anthony", 
+           family = "Yang", 
+           email = "anthonyang2027@utexas.edu", 
+           role = c("aut", "cre"))
+Description: Provides an S4 class 'sparse_numeric' to represent sparse numeric vectors efficiently,
+    along with arithmetic operations, cross-products, norms, and standardization methods.
+    Designed for memory-efficient storage and computation on vectors with many zeros.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    methods
+RoxygenNote: 7.3.3
