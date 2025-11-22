@@ -230,6 +230,34 @@ setMethod("sparse_mult", signature(x="sparse_numeric", y="sparse_numeric"), func
   .sanitize_sparse(prod_vals, as.integer(common), x@length)
 })
 
+# Define S4 '+' method for sparse_numeric
+setMethod(
+  f = "+",
+  signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
+  definition = function(e1, e2) {
+    sparse_add(e1, e2)
+  }
+)
+
+# Define S4 '-' method for sparse_numeric
+setMethod(
+  f = "-",
+  signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
+  definition = function(e1, e2) {
+    sparse_sub(e1, e2)
+  }
+)
+
+# Define S4 '*' method for sparse_numeric
+setMethod(
+  f = "*",
+  signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
+  definition = function(e1, e2) {
+    sparse_mult(e1, e2)
+  }
+)
+
+
 #------------------------
 # sparse_crossprod
 #------------------------
